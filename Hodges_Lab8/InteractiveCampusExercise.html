@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> GeoTag Interactive Mapping Exercise</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+</head>
+<style>
+
+.sidebar {
+  position: absolute;
+  left: 0px;
+  width: 250px;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  padding: 20px;
+  font-size: 16px;
+  border: solid;
+  background-color: #add8e6;
+}
+.main-heading {
+    font-size: 15px;
+}
+</style>
+<body>
+  <div class="sidebar">
+  <font color="#000000"><center><h2 id="main-heading" >Interactive Map</Map></h2></center></font>
+  <div>
+
+<div class="row">
+  <div class="column">
+    <center> <img src="images/swarthmore.png" alt="Swarthmore Logo" style="width:60%"> </center>
+  </div>
+  <font color="Black"><center><h3> Swarthmore College Campus </h3></center></font>
+
+  </div>
+
+<h1> Campus as of 2024 </h1>
+<h2> Highlighted Buildings Include: </h2>
+<h3> Parrish Hall, McCabe Library </h3>
+
+<footer>
+       <p> Share this template! <br> https://github.com/mckeont/GeoTag </p>
+</footer>
+
+    <div id="map" style=" position: fixed; right: 0; left: 300px; top: 0; bottom: 0 "></div>
+
+    <!-- JS IMPORTS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src= "http://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src= "js/setup.js"></script>
+    <script src= "js/parrish.js"></script>
+    <script src = "js/mccabe.js"></script>
+
+    <script>
+
+// Create a style variable
+    var myStyle = {
+    radius: 5,
+    fillColor: "#a21a34",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.7
+};
+
+//Load in buildings:
+var parrish =   L.geoJSON(parrish, {   
+          style: myStyle
+        }).bindPopup(function (layer) {
+       return "" + layer.feature.properties.name
+    }).addTo(map).bringToBack();
+//.bindLabel('in the ___ Semester, Swarthmore College admin blocked fire exits while students participated in a sit-in')
+
+var mccabe =   L.geoJSON(mccabe, {   
+          style: myStyle
+        }).bindPopup(function (layer) {
+       return "" + layer.feature.properties.name
+    }).addTo(map).bringToBack();
+//.bindLabel('Numerous silent study-ins have been disrupted by Public Safety Officers and College administrators.')
+
+// Make a simple circle
+var circle = L.circle([39.904790, -75.354137], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 5
+}).addTo(map);
+
+//.bindLabel('October 22nd, 2024, at 6:13 am, Public Satefy Officers were called to deconstruct a sukkah constucted by Jewish students in observance of Sukkot. This put students sleeping inside the sukkah in danger, and violated religious practices.')
+
+
+// Make a shape
+var polygon = L.polygon([
+[39.90510093171363,-75.35398504160635],
+[39.90428399367795,-75.3532349450525],
+[39.90458235478553,-75.352447806693],
+[39.90507962041022,-75.35296639196471],
+[39.905328251869406,-75.35332754956494],
+[39.90510093171363,-75.35398504160635]
+]).addTo(map);
+
+// Add a marker
+L.marker([39.906250, -75.355324]).addTo(map);
+    </script>
+
+</body>
+</html>
